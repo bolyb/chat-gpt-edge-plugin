@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/ChatGPTEdge.Api
+/ChatGPTEdge.Api/.vs/ChatGPTEdge.Api
+/ChatGPTEdge.Api/bin/Debug/net6.0
+/ChatGPTEdge.Api/obj
