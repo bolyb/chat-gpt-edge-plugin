@@ -9,23 +9,25 @@ namespace ChatGPTEdge.Api.Managers
     public class DenseCaptionManager : IDenseCaptionManager
     {
         private readonly ILogger<DenseCaptionManager> logger;
-        private readonly string visionUrl;
-        private readonly string visionKey;
-        public DenseCaptionManager(ILogger<DenseCaptionManager> logger, IOptions<VisionOptions> serviceOptions)
+        public DenseCaptionManager(ILogger<DenseCaptionManager> logger)
         {
             this.logger = logger;
-            this.visionUrl = serviceOptions.Value.VisionUrl ?? throw new ArgumentException("Error initialize vision url configuration");
-            this.visionKey = serviceOptions.Value.VisionKey ?? throw new ArgumentException("Error initialize vision key configuration");
         }
 
         /// <summary>
         /// Get DenseCaptionsResponse using Image Analysis 4.0 API 
         /// </summary>
-        public DenseCaptionsResponse GetDenseCaptions(string imageUri)
+        public DenseCaptionsResponse GetDenseCaptions(string imageUrl)
         {
-            var serviceOptions = new VisionServiceOptions(visionUrl, new AzureKeyCredential(visionKey));
+            // To set the environment variable for your key and endpoint, open a console window and run
+            // setx VISION_KEY your-key 
+            // setx VISION_ENDPOINT your-endpoint
+            // For VS Local Debugging we may need to add Environment Variables under launchSettings.json depending on which ActiveDebugProfile we are using
+            var serviceOptions = new VisionServiceOptions(
+            Environment.GetEnvironmentVariable("VISION_ENDPOINT"),
+            new AzureKeyCredential(Environment.GetEnvironmentVariable("VISION_KEY")));
 
-            using var imageSource = VisionSource.FromUrl(new Uri(imageUri));
+            using var imageSource = VisionSource.FromUrl(new Uri(imageUrl));
 
             var analysisOptions = new ImageAnalysisOptions()
             {
