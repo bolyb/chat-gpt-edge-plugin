@@ -19,6 +19,9 @@ builder.Services.AddSwaggerGen(options =>
 _ = builder.Logging.ClearProviders();
 _ = builder.Logging.AddConsole();
 
+// Configuration Bindings
+_ = builder.Services.AddOptions<VisionOptions>().BindConfiguration(VisionOptions.Vision);
+
 // Service Bindings
 _ = builder.Services.AddTransient<IDenseCaptionManager, DenseCaptionManager>();
 
