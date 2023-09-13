@@ -1,0 +1,111 @@
+{
+  "DenseCaptionsResult": {
+    "Values": [
+      {
+        "Text": "a person pointing at a screen",
+        "Confidence": 0.7767596244812012,
+        "BoundingBox": {
+          "X": 0,
+          "Y": 0,
+          "W": 1038,
+          "H": 692
+        }
+      },
+      {
+        "Text": "a screen shot of a computer",
+        "Confidence": 0.7603511214256287,
+        "BoundingBox": {
+          "X": 62,
+          "Y": 51,
+          "W": 673,
+          "H": 437
+        }
+      },
+      {
+        "Text": "a person pointing at a screen",
+        "Confidence": 0.7735027074813843,
+        "BoundingBox": {
+          "X": 646,
+          "Y": 63,
+          "W": 269,
+          "H": 605
+        }
+      },
+      {
+        "Text": "a close up of a table",
+        "Confidence": 0.7479931712150574,
+        "BoundingBox": {
+          "X": 0,
+          "Y": 536,
+          "W": 1021,
+          "H": 146
+        }
+      },
+      {
+        "Text": "a close up of a person's head",
+        "Confidence": 0.8115781545639038,
+        "BoundingBox": {
+          "X": 782,
+          "Y": 77,
+          "W": 116,
+          "H": 103
+        }
+      },
+      {
+        "Text": "a person's back pocket",
+        "Confidence": 0.727537214756012,
+        "BoundingBox": {
+          "X": 753,
+          "Y": 538,
+          "W": 140,
+          "H": 135
+        }
+      },
+      {
+        "Text": "a close up of a plant",
+        "Confidence": 0.7623905539512634,
+        "BoundingBox": {
+          "X": 0,
+          "Y": 10,
+          "W": 86,
+          "H": 507
+        }
+      },
+      {
+        "Text": "a person pointing at a screen",
+        "Confidence": 0.79549640417099,
+        "BoundingBox": {
+          "X": 9,
+          "Y": 15,
+          "W": 973,
+          "H": 651
+        }
+      },
+      {
+        "Text": "a person in a yellow coat",
+        "Confidence": 0.6707674860954285,
+        "BoundingBox": {
+          "X": 687,
+          "Y": 199,
+          "W": 225,
+          "H": 356
+        }
+      },
+      {
+        "Text": "a screen shot of a phone",
+        "Confidence": 0.7745437622070312,
+        "BoundingBox": {
+          "X": 0,
+          "Y": 0,
+          "W": 215,
+          "H": 541
+        }
+      }
+    ]
+  },
+  "ModelVersion": "2023-02-01-preview",
+  "Metadata": {
+    "Width": 1038,
+    "Height": 692
+  }
+}

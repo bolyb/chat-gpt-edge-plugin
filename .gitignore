@@ -3,7 +3,7 @@
 ################################################################################
 
 /.vs
-/ChatGPTEdge.Api
+/ChatGPTEdge.Api/.vs
 /ChatGPTEdge.Api/.vs/ChatGPTEdge.Api
 /ChatGPTEdge.Api/bin/Debug/net6.0
 /ChatGPTEdge.Api/obj
