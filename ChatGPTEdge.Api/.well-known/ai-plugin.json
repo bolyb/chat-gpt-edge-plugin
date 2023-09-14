@@ -1,0 +1,17 @@
+{
+    "schema_version": "v1",
+    "name_for_model": "VersionGPTPlugin",
+    "name_for_human": "VersionGPT Plugin",
+    "description_for_model": "Used to perform image analysis (dense captions).",
+    "description_for_human": "Used to perform image analysis.",
+    "auth": {
+        "type": "none"
+    },
+    "api": {
+        "type": "openapi",
+        "url": "https://localhost:7147/DeviceResult/swagger.json"
+    },
+    "logo_url": "https://learn.microsoft.com/azure/cognitive-services/computer-vision/media/quickstarts/presentation.png",
+    "contact_email": "bbloy@microsoft.com",
+    "legal_info_url": "http://www.example.com/legal"
+}
