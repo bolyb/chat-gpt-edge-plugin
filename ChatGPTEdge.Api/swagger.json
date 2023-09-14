@@ -10,8 +10,26 @@
                 "tags": [
                     "DeviceResult"
                 ],
-                "summary": "Get the list of deviceResults",
+                "summary": "Get details of an image",
                 "operationId": "GetDenseCaptions",
+                "parameters": [
+                    {
+                        "name": "imageurl",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Success",
