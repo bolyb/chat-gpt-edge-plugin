@@ -13,19 +13,29 @@ namespace ChatGPTEdge.Api.Managers
         private readonly string visionKey;
         public DenseCaptionManager(ILogger<DenseCaptionManager> logger, IOptions<VisionOptions> serviceOptions)
         {
+            if (string.IsNullOrEmpty(serviceOptions.Value.VisionUrl) || serviceOptions.Value.VisionUrl == "<ADD_VISION_URL_HERE>")
+            {
+                throw new ArgumentException("Error initialize vision url configuration");
+            }
+            if (string.IsNullOrEmpty(serviceOptions.Value.VisionKey) || serviceOptions.Value.VisionKey == "<ADD_VISION_KEY_HERE>")
+            {
+                throw new ArgumentException("Error initialize vision key configuration");
+            }
+
+            this.visionUrl = serviceOptions.Value.VisionUrl;
+            this.visionKey = serviceOptions.Value.VisionKey;
+
             this.logger = logger;
-            this.visionUrl = serviceOptions.Value.VisionUrl ?? throw new ArgumentException("Error initialize vision url configuration");
-            this.visionKey = serviceOptions.Value.VisionKey ?? throw new ArgumentException("Error initialize vision key configuration");
         }
 
         /// <summary>
         /// Get DenseCaptionsResponse using Image Analysis 4.0 API 
         /// </summary>
-        public DenseCaptionsResponse GetDenseCaptions(string imageUri)
+        public DenseCaptionsResponse GetDenseCaptions(string imageUrl)
         {
             var serviceOptions = new VisionServiceOptions(visionUrl, new AzureKeyCredential(visionKey));
 
-            using var imageSource = VisionSource.FromUrl(new Uri(imageUri));
+            using var imageSource = VisionSource.FromUrl(new Uri(imageUrl));
 
             var analysisOptions = new ImageAnalysisOptions()
             {
