@@ -1,5 +1,5 @@
+using ChatGPTEdge.Api.Managers;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace ChatGPTEdge.Api.Controllers
 {
@@ -9,25 +9,29 @@ namespace ChatGPTEdge.Api.Controllers
     {
         private readonly ILogger<DeviceResultController> _logger;
 
-        public DeviceResultController(ILogger<DeviceResultController> logger)
+        private readonly IDenseCaptionManager denseCaptionManager;
+
+        public DeviceResultController(ILogger<DeviceResultController> logger, IDenseCaptionManager denseCaptionManager)
         {
             _logger = logger;
+            this.denseCaptionManager = denseCaptionManager;
         }
 
         /// <summary>
         /// Get the list of deviceResults
         /// </summary>
         [HttpGet(Name = "GetDenseCaptions")]
-        public IEnumerable<DeviceResult> Get()
+        public IEnumerable<DeviceResult> Get(string imageUrl, string location)
         {
             List<DeviceResult> response = new List<DeviceResult>();
-            using (StreamReader r = new StreamReader("ExampleResult.json"))
-            {
-                string json = r.ReadToEnd();
-                DenseCaptionsResponse? result = JsonConvert.DeserializeObject<DenseCaptionsResponse>(json);
-                response.Add(new DeviceResult() { Location = "Farm Crop", DenseCaptionsResponse = result });
-            }
-
+            DenseCaptionsResponse denseCaptionsResponse = this.denseCaptionManager.GetDenseCaptions(imageUrl);
+            response.Add(new DeviceResult() { Location = location, DenseCaptionsResponse = denseCaptionsResponse });
+            //using (StreamReader r = new StreamReader("ExampleResult.json"))
+            //{
+            //    string json = r.ReadToEnd();
+            //    DenseCaptionsResponse? result = JsonConvert.DeserializeObject<DenseCaptionsResponse>(json);
+            //    response.Add(new DeviceResult() { Location = "Farm Crop", DenseCaptionsResponse = result });
+            //}
             return response;
         }
     }
