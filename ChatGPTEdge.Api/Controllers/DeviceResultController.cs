@@ -22,17 +22,17 @@ namespace ChatGPTEdge.Api.Controllers
         /// Get the list of deviceResults
         /// </summary>
         [HttpGet(Name = "GetDenseCaptions")]
-        public IEnumerable<DeviceResult> Get()
+        public IEnumerable<DeviceResult> Get(string imageUrl, string? location = null)
         {
             List<DeviceResult> response = new List<DeviceResult>();
-            //DenseCaptionsResponse denseCaptionsResponse = this.denseCaptionManager.GetDenseCaptions(imageUrl);
-            //response.Add(new DeviceResult() { Location = location, DenseCaptionsResponse = denseCaptionsResponse });
-            using (StreamReader r = new StreamReader("DenseCaptionsResult.json"))
-            {
-                string json = r.ReadToEnd();
-                DenseCaptionsResponse? result = JsonConvert.DeserializeObject<DenseCaptionsResponse>(json);
-                response.Add(new DeviceResult() { Location = "Farm Crop", DenseCaptionsResponse = result });
-            }
+            DenseCaptionsResponse denseCaptionsResponse = this.denseCaptionManager.GetDenseCaptions(imageUrl);
+            response.Add(new DeviceResult() { Location = location, DenseCaptionsResponse = denseCaptionsResponse });
+            //using (StreamReader r = new StreamReader("DenseCaptionsResult.json"))
+            //{
+            //    string json = r.ReadToEnd();
+            //    DenseCaptionsResponse? result = JsonConvert.DeserializeObject<DenseCaptionsResponse>(json);
+            //    response.Add(new DeviceResult() { Location = "Farm Crop", DenseCaptionsResponse = result });
+            //}
             return response;
         }
 
