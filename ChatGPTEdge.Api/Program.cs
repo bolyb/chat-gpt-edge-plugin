@@ -1,12 +1,25 @@
 using ChatGPTEdge.Api;
 using ChatGPTEdge.Api.Managers;
+using Microsoft.Extensions.FileProviders;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
+// Setting CORS to allow localhost:3000 for Microsoft Chat Copilot
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost3000",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -26,6 +39,17 @@ _ = builder.Services.AddOptions<VisionOptions>().BindConfiguration(VisionOptions
 _ = builder.Services.AddTransient<IDenseCaptionManager, DenseCaptionManager>();
 
 var app = builder.Build();
+
+// Add CORS middleware before routing (and explicitly before UseEndpoints)
+app.UseCors("AllowLocalhost3000");
+
+// Add static files (manifest etc)
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, ".well-known")),
+    RequestPath = "/.well-known"
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

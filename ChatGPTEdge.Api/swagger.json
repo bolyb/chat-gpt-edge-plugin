@@ -1,0 +1,161 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "ChatGPTEdge.Api",
+        "version": "1.0"
+    },
+    "servers": {
+        "url": "https://localhost:7147"
+    },
+    "paths": {
+        "/DeviceResult": {
+            "post": {
+                "tags": [
+                    "DeviceResult"
+                ],
+                "summary": "Input image/photo information, output details ofimages/photos",
+                "operationId": "PhotoDetails",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ImageInfo"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DeviceResult"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ImageInfo": {
+                "type": "object",
+                "properties": {
+                    "imageUrl": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "DenseCaption": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "confidence": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "boundingBox": {
+                        "$ref": "#/components/schemas/DenseCaptionBoundingBox"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "DenseCaptionBoundingBox": {
+                "type": "object",
+                "properties": {
+                    "x": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "y": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "w": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "h": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "DenseCaptionsResponse": {
+                "type": "object",
+                "properties": {
+                    "denseCaptionsResult": {
+                        "$ref": "#/components/schemas/DenseCaptionsResult"
+                    },
+                    "modelVersion": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/DenseCaptionsResultMetadata"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "DenseCaptionsResult": {
+                "type": "object",
+                "properties": {
+                    "values": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DenseCaption"
+                        },
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "DenseCaptionsResultMetadata": {
+                "type": "object",
+                "properties": {
+                    "width": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "height": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "DeviceResult": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "denseCaptionsResponse": {
+                        "$ref": "#/components/schemas/DenseCaptionsResponse"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    }
+}
