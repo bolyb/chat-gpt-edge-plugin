@@ -29,13 +29,28 @@ namespace ChatGPTEdge.Api.Managers
         }
 
         /// <summary>
-        /// Get DenseCaptionsResponse using Image Analysis 4.0 API 
+        /// Get DenseCaptionsResponse using Image Analysis 4.0 API from image url
         /// </summary>
-        public DenseCaptionsResponse GetDenseCaptions(string imageUrl)
+        public DenseCaptionsResponse GetDenseCaptionsFromUrl(string imageUrl)
+        {
+            using var imageSource = VisionSource.FromUrl(new Uri(imageUrl));
+
+            return GetImageAnalyisResults(imageSource);
+        }
+
+        /// <summary>
+        /// Get DenseCaptionsResponse using Image Analysis 4.0 API from file
+        /// </summary>
+        public DenseCaptionsResponse GetDenseCaptionsFromFile(string imagePath)
+        {
+            using var imageSource = VisionSource.FromFile(imagePath);
+
+            return GetImageAnalyisResults(imageSource);
+        }
+
+        private DenseCaptionsResponse GetImageAnalyisResults(VisionSource imageSource)
         {
             var serviceOptions = new VisionServiceOptions(visionUrl, new AzureKeyCredential(visionKey));
-
-            using var imageSource = VisionSource.FromUrl(new Uri(imageUrl));
 
             var analysisOptions = new ImageAnalysisOptions()
             {
@@ -73,15 +88,6 @@ namespace ChatGPTEdge.Api.Managers
                         Metadata = new DenseCaptionsResultMetadata { Width = result.ImageWidth ?? 0, Height = result.ImageHeight ?? 0 }
                     };
 
-                    // Serialize the DenseCaptionsResponse object to a JSON string
-                    string json = JsonConvert.SerializeObject(denseCaptionsResponse, Formatting.Indented);
-
-                    // Save the JSON string to a file DenseCaptionsResult.json
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "DenseCaptionsResult.json");
-                    File.WriteAllText(filePath, json);
-
-                    logger.LogInformation($"Saved DenseCaptionsResult to {filePath}");
-
                     return denseCaptionsResponse;
                 }
                 else
@@ -96,6 +102,5 @@ namespace ChatGPTEdge.Api.Managers
             }
             throw new Exception("Unable to get image analysis result.");
         }
-
     }
 }

@@ -2,6 +2,7 @@
 {
     public interface IDenseCaptionManager
     {
-        public DenseCaptionsResponse GetDenseCaptions(string imageUri);
+        public DenseCaptionsResponse GetDenseCaptionsFromUrl(string imageUri);
+        public DenseCaptionsResponse GetDenseCaptionsFromFile(string imagePath);
     }
 }

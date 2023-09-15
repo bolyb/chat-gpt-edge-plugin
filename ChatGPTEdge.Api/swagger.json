@@ -4,53 +4,35 @@
         "title": "ChatGPTEdge.Api",
         "version": "1.0"
     },
+    "servers": {
+        "url": "https://localhost:7147"
+    },
     "paths": {
         "/DeviceResult": {
-            "get": {
+            "post": {
                 "tags": [
                     "DeviceResult"
                 ],
-                "summary": "Get details of an image",
-                "operationId": "GetDenseCaptions",
-                "parameters": [
-                    {
-                        "name": "imageurl",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "location",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
+                "summary": "Input image/photo information, output details ofimages/photos",
+                "operationId": "PhotoDetails",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ImageInfo"
+                                }
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "Success",
                         "content": {
-                            "text/plain": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/DeviceResult"
-                                    }
-                                }
-                            },
                             "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/DeviceResult"
-                                    }
-                                }
-                            },
-                            "text/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
@@ -66,6 +48,19 @@
     },
     "components": {
         "schemas": {
+            "ImageInfo": {
+                "type": "object",
+                "properties": {
+                    "imageUrl": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
             "DenseCaption": {
                 "type": "object",
                 "properties": {
